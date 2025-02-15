@@ -7,15 +7,19 @@ export const getAllSpots = () => async (dispatch) => {
       dispatch({ type: "spots/all_spots", payload });
     }
   };
-  
+  const SPOT_DETAILS = "spots/spot_details";
+  export const spotDetails = (payload) => ({
+    type: SPOT_DETAILS,
+    payload,
+  });
   export const getSpotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
     if (response.ok) {
       const spot = await response.json();
-      dispatch({ type: "spots/spot_details", spot });
+      dispatch(spotDetails(spot));//{ type: "spots/SPOT_DETAILS", spot });
       return spot;
     }
-  };
+  };  
 
   export const getUserSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current");
@@ -84,7 +88,7 @@ export const getAllSpots = () => async (dispatch) => {
     spotDetails: {},
     userSpots: [],
   };
-  
+
   const spotsReducer = (state = initialSpotState, action) => {
     if (action.type === "spots/all_spots") {
         const newState = { ...state, allSpots: {} };

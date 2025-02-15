@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import AllSpots from './componenets/AllSpots/AllSpots.jsx';
 import Home from './componenets/Home/Home.jsx';
+import SpotDetails from './componenets/SpotDetails/SpotDetails.jsx';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -31,10 +32,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <AllSpots />
       },
-      // {
-      //   path: `/spots/:spotId`,
-      //   element: <SpotDetails />
-      // }, 
+      {
+        path: `/spots/:spotId`,
+        element: <SpotDetails />
+      }, 
       // {
       //   path: '/spots/new',
       //   element: <NewSpot />
