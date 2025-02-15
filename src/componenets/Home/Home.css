@@ -147,9 +147,19 @@
     display: none;
 }
 
+@media (max-width: 1268px) {
+  .profile-button {
+      /* width: auto; */
+      right: 3%;
+      top: 10px;
+      gap: 0.3rem;
+      font-size: 0.9rem; /* Reduce font size */
+      padding: 0.4rem 0.8rem;
+  }
+}
 @media (max-width: 768px) {
   .profile-button {
-      width: 15%;
+    /* width: auto; */
       right: 3%;
       top: 10px;
       gap: 0.3rem;
@@ -160,7 +170,7 @@
 
 @media (max-width: 480px) {
   .profile-button {
-      width: 25%;
+    /* width: auto; */
       right: 2%;
       top: 5px;
       font-size: 0.8rem;

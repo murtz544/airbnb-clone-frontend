@@ -1,7 +1,7 @@
 @import url('../../index.css');
 
 .spots-padding {
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 
 .spots-images {
@@ -11,8 +11,7 @@
 	justify-items: center;
 	gap: 1rem;
 	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
+	max-width: 1600px;
 	padding: 1rem;
 }
 

@@ -1,31 +1,39 @@
 import { csrfFetch } from "./csrf";
 
+export const allSpots = (payload) => ({
+  type: "spots/all_spots",
+  payload,
+});
 export const getAllSpots = () => async (dispatch) => {
     const response = await fetch("/api/spots");
     if (response.ok) {
       const payload = await response.json();
-      dispatch({ type: "spots/all_spots", payload });
+      dispatch(allSpots(payload));
     }
   };
-  const SPOT_DETAILS = "spots/spot_details";
+
   export const spotDetails = (payload) => ({
-    type: SPOT_DETAILS,
+    type: "spots/spot_details",
     payload,
   });
   export const getSpotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
     if (response.ok) {
       const spot = await response.json();
-      dispatch(spotDetails(spot));//{ type: "spots/SPOT_DETAILS", spot });
+      dispatch(spotDetails(spot));
       return spot;
     }
   };  
 
+  export const userSpots = (spots) => ({
+    type: "spots/get_user_spots",
+    payload: spots,
+  });
   export const getUserSpots = () => async (dispatch) => {
     const response = await csrfFetch("/api/spots/current");
     if (response.ok) {
       const spots = await response.json();
-      dispatch({ type: "spots/get_user_spots", payload: spots });
+      dispatch(userSpots(spots));
     }
   };
   
@@ -44,6 +52,10 @@ export const getAllSpots = () => async (dispatch) => {
     }
   };
 
+  export const addImage = (image) => ({
+    type: "spots/add_spot_image",
+    image,
+  });
   export const addSpotImage = (spotId, image) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
       method: "POST",
@@ -55,11 +67,15 @@ export const getAllSpots = () => async (dispatch) => {
   
     if (response.ok) {
       const newImage = await response.json();
-      dispatch({ type: "spots/add_spot_image", newImage });
+      dispatch(addImage(newImage));
       return newImage;
     }
   };
   
+  export const updateSpotAction = (spot) => ({
+    type: "spots/update_spot",
+    payload: spot,
+  });
   export const updateSpot = (spotId, spotInfo) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: "PUT",
@@ -68,21 +84,26 @@ export const getAllSpots = () => async (dispatch) => {
     });
     if (response.ok) {
       const updatedSpot = await response.json();
-      dispatch({ type: "spots/update_spot", payload: updatedSpot });
+      dispatch(updateSpotAction(updatedSpot));
       return updatedSpot;
     } else if (!response.ok) {
       return response;
     }
   };
   
+  export const deleteSpotAction = (spotId) => ({
+    type: "spots/delete_spot",
+    spotId,
+  });
   export const deleteSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: "DELETE",
     });
     if (response.ok) {
-      dispatch({ type: "spots/delete_spot", spotId });
+      dispatch(deleteSpotAction(spotId));
     }
   };
+  
   const initialSpotState = {
     allSpots: {},
     spotDetails: {},

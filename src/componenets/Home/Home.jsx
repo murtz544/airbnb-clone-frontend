@@ -108,27 +108,6 @@ const Home = ({ isUserRestored }) => {
                 </ul>
               </li>
             )}
-            {/* <div className='dropdown-container'>
-              <button className='dropdown-button' onClick={() => setShowDropdown(!showDropdown)}>
-                Menu
-              </button>
-              {showDropdown && (
-                <ul className='dropdown-menu'>
-                  {!sessionUser ? (
-                    <>
-                      <li>
-                        <NavLink to='/login'>Login</NavLink>
-                      </li>
-                      <li>
-                        <NavLink to='/signup'>Sign Up</NavLink>
-                      </li>
-                    </>
-                  ) : (
-                    <li>Welcome, {sessionUser.username}</li>
-                  )}
-                </ul>
-              )}
-            </div> */}
           </div>
         </ul>
       </div>

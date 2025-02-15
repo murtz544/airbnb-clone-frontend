@@ -5,6 +5,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import AllSpots from './componenets/AllSpots/AllSpots.jsx';
 import Home from './componenets/Home/Home.jsx';
 import SpotDetails from './componenets/SpotDetails/SpotDetails.jsx';
+import CreateNewSpot from './componenets/CreateNewSpot/CreatenewSpot.jsx';
+import ManageSpots from './componenets/ManageSpots/ManageSpots.jsx';
+import UpdateSpots from './componenets/UpdateSpots/UpdateSpots.jsx';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -36,18 +39,18 @@ const router = createBrowserRouter([
         path: `/spots/:spotId`,
         element: <SpotDetails />
       }, 
-      // {
-      //   path: '/spots/new',
-      //   element: <NewSpot />
-      // }, 
-      // {
-      //   path: '/spots/current',
-      //   element: <ManageSpots />
-      // }, 
-      // {
-      //   path: '/spots/:spotId/edit',
-      //   element: <UpdateSpot />
-      // }
+      {
+        path: '/spots/new',
+        element: <CreateNewSpot />
+      }, 
+      {
+        path: '/spots/current',
+        element: <ManageSpots />
+      }, 
+      {
+        path: '/spots/:spotId/edit',
+        element: <UpdateSpots />
+      }
     ]
   }
 ]);
