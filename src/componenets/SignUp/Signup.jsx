@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import * as sessionActions from "../../store/session";
+import { signup } from "../../store/session.js";
 import "./Signup.css";
 import { useModal } from "../../context/Modal";
 
@@ -21,7 +21,7 @@ const Signup = () => {
   useEffect(() => {
     const disabled = {};
     if (!email && !username && !firstName && !lastName && !password && !confirmPassword) {
-      disabled.form = "Please fill out the sign-up form";
+      disabled.form = "Please fill out all fields";
     }
     if (username.length < 4) {
       disabled.username = "Username must be longer than 4 characters";
@@ -31,48 +31,41 @@ const Signup = () => {
     }
     if (!confirmPassword) {
       disabled.confirmPassword =
-        "Password and confirm-password must not be empty";
+        "Password and Confirm Password fields must match";
     }
     setErrors(disabled);
   }, [email, username, firstName, lastName, password, confirmPassword]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsSubmitted(true);
     // Validation checks
     if (password !== confirmPassword) {
-      setErrors(["Passwords do not match."]);
-      return;
+      return setErrors({confirmPassword: "Password and Confirm Password must match"});
     }
 
-    const userData = {
-      email,
-      username,
-      firstName,
-      lastName,
-      password,
-    };
-
-    // Dispatch signup action
-    const response = await dispatch(signup(userData));
-
-    // Handle errors from backend
-    if (response.errors) {
-      setErrors(response.errors);
-    }
+    setErrors({});
+    const userData = { email, username, firstName, lastName, password };
+    
+    return await dispatch(signup(userData)).then(closeModal)
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data?.errors) {
+        setErrors(data.errors);
+      }
+    });
   };
 
   return (
     <div className="signup-container">
       <h2>Sign Up</h2>
-      {errors.length > 0 && (
+      {errors.length >= 0 && (
         <ul className="error-list">
           {errors.map((error, index) => (
             <li key={index}>{error}</li>
           ))}
         </ul>
       )}
-
       <form onSubmit={handleSubmit} className="signup-form">
         <input
           type="email"
@@ -81,7 +74,7 @@ const Signup = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-
+        {errors.email && isSubmitted && <p>{errors.email}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -89,7 +82,7 @@ const Signup = () => {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-
+        {errors.username && isSubmitted && <p>{errors.username}</p>}
         <input
           type="text"
           placeholder="First Name"
@@ -97,7 +90,7 @@ const Signup = () => {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-
+        {errors.firstName && isSubmitted && <p>{errors.firstName}</p>}
         <input
           type="text"
           placeholder="Last Name"
@@ -105,7 +98,7 @@ const Signup = () => {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-
+        {errors.lastName && isSubmitted && <p>{errors.lastName}</p>}
         <input
           type="password"
           placeholder="Password"
@@ -113,7 +106,7 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
+        {errors.password && isSubmitted && <p>{errors.password}</p>}
         <input
           type="password"
           placeholder="Confirm Password"
@@ -121,8 +114,14 @@ const Signup = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && isSubmitted && (<p>{errors.confirmPassword}</p>)}
+        <button
+          type="submit"
+          className="signup-btn"
+          disabled={Object.values(errors).length > 0}
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );

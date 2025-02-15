@@ -1,12 +1,14 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaAirbnb, FaUser } from 'react-icons/fa';
+import { FaAirbnb, FaUserCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { useEffect, useRef, useState } from 'react';
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from "../../store/session.js";
-import { RiMenu3Line } from "react-icons/ri";
+import { RiMenuFill } from "react-icons/ri";
 import ModalMenu from './ModalMenu.jsx';
+import Signup from '../SignUp/Signup.jsx';
+import Login from '../Login/Login.jsx';
 
 const Home = ({ isUserRestored }) => {
   const sessionUser = useSelector(state => state.session.user);
@@ -44,7 +46,7 @@ const Home = ({ isUserRestored }) => {
     navigate('/');
   }
 
-  const ulStyle = showDropdown ? "dropown-btn" : { display: 'none' };
+  const ulStyle = "profile-dropdown" + (showDropdown ? "" : " hidden");
   return (
     <IconContext.Provider value={{ className: 'react-wave-icon' }}>
       <div className='navigation-div'>
@@ -72,8 +74,8 @@ const Home = ({ isUserRestored }) => {
               <li>
                 {/* <ProfileButton user={sessionUser} /> */}
                 <button className="profile-button" onClick={changeMenuBar}>
-                    <RiMenu3Line className="menu-button-icon" size={22} />
-                    <FaUser className="profile-button-icon" size={22} />
+                    <RiMenuFill size={22} />
+                    <FaUserCircle size={22} />
                 </button>
                 <ul className={ulStyle} ref={ulRef}>
                     {sessionUser ? (
@@ -94,12 +96,12 @@ const Home = ({ isUserRestored }) => {
                         <ModalMenu
                         itemText="Sign Up"
                         onItemClick={closeDropdown}
-                        modalComponent={<SignupFormModal />}
+                        modalComponent={<Signup />}
                         />
                         <ModalMenu
                         itemText="Log In"
                         onItemClick={closeDropdown}
-                        modalComponent={<LoginFormModal />}
+                        modalComponent={<Login />}
                         />
                     </>
                     )}

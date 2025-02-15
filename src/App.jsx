@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import AllSpots from './componenets/AllSpots/AllSpots.jsx';
 import Home from './componenets/Home/Home.jsx';
 
@@ -18,6 +18,7 @@ function Layout() {
   return (
     <>
       <Home isUserRestored={isUserRestored} />
+      {isUserRestored && <Outlet />}
     </>
   );
 }

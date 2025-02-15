@@ -40,9 +40,9 @@ export function Modal() {
   if (!modalRef || !modalRef.current || !modalContent) return null;
 
   return ReactDOM.createPortal(
-    <div style={{ position: "fixed", top: 0, left: 0, display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div style={{ position: "fixed", top: 0, right: 0, left: 0, bottom: 0, backgroundColor: rgba(0, 0, 0, 0.7) }} onClick={closeModal} />
-      <div style={{ position: "absolute", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", backgroundColor: "white", padding: "5rem 2rem", borderRadius: "14px", border: "solid 10px black" }}>{modalContent}</div>
+    <div id="modal">
+      <div id="modal-background" onClick={closeModal} />
+      <div id="modal-content">{modalContent}</div>
     </div>,
     modalRef.current
   );
