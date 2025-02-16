@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./CreateNewSpot.css";
+import "./CreatenewSpot.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNewSpot, addSpotImage } from "../../store/spots";
