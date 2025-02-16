@@ -101,7 +101,7 @@ const Login = () => {
             Login
         </button>
         <a onClick={handleSubmitDemo}>
-            Login as Demo User
+            <u>Demo User</u>
         </a>
       </form>
     </div>

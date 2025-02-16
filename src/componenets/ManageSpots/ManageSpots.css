@@ -67,7 +67,8 @@
   .manage-spot-thumbnail {
     width: 300px;
     border-radius: 14px;
-    
+    height: 250px; /* Set a fixed height */
+    background-color: white; /* Adds white padding around smaller images */
   }
   
   .manage-spot-info {

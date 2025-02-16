@@ -173,7 +173,7 @@ function UpdateSpots() {
             </fieldset>
             <hr />
             {/* Submit Button */}
-            <button type="submit" className="submit-button">Create Spot</button>
+            <button type="submit" className="submit-button">Update Spot</button>
         </form>
     )
 }

@@ -54,12 +54,12 @@ const Home = ({ isUserRestored }) => {
           {/* Left side: Logo */}
           <li className='nav-logo'>
             <NavLink to='/' className='navigation-logo' style={{ color: '#ef4000' }}>
-              <FaAirbnb size='1.2em' />airbnb
+              <FaAirbnb size='1.5em' />airbnb
             </NavLink>
           </li>
 
           {/* Right side: Dropdown */}
-          <div className='nav-button-div'>
+          <div>
           {sessionUser ? (
               <button 
                 onClick={handleNewSpot}
@@ -94,14 +94,14 @@ const Home = ({ isUserRestored }) => {
                     ) : (
                     <>
                         <ModalMenu
-                        itemText="Sign Up"
-                        onItemClick={closeDropdown}
-                        modalComponent={<Signup />}
-                        />
-                        <ModalMenu
                         itemText="Log In"
                         onItemClick={closeDropdown}
                         modalComponent={<Login />}
+                        />
+                        <ModalMenu
+                        itemText="Sign Up"
+                        onItemClick={closeDropdown}
+                        modalComponent={<Signup />}
                         />
                     </>
                     )}

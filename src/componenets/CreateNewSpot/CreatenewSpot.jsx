@@ -7,6 +7,7 @@ import { addNewSpot, addSpotImage } from "../../store/spots";
 function CreateNewSpot() {
     const [errors, setErrors] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [form, setForm] = useState({
@@ -24,6 +25,26 @@ function CreateNewSpot() {
         image5: "",
     });
 
+    const uploadImage = async (imageUrl) => {
+        const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dhuarntif/image/upload`;
+    
+        const formData = new FormData();
+        formData.append("file", imageUrl);
+        formData.append("upload_preset", "myCloud");
+    
+        try {
+            const response = await fetch(cloudinaryUrl, {
+                method: "POST",
+                body: formData,
+            });
+            const data = await response.json();
+            return data.secure_url; // Return the uploaded image URL
+        } catch (error) {
+            console.error("Upload failed:", error);
+            return null;
+        }
+    };
+      
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prevForm) => ({
@@ -61,33 +82,74 @@ function CreateNewSpot() {
         setErrors(formErrors);
     }, [form]);
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitted(true);
         if (Object.keys(errors).length > 0) return;
 
-        const spotDetails = {
-            name: form.name,
-            description: form.description,
-            address: form.address,
-            city: form.city,
-            state: form.state,
-            country: form.country,
-            price: form.price,
-        };
+        setIsLoading(true);
 
-        const createSpot = await dispatch(addNewSpot(spotDetails, navigate));
-        if (createSpot) {
-            const images = [
-              { url: form.image1, preview: true },
-              { url: form.image2, preview: false },
-              { url: form.image3, preview: false },
-              { url: form.image4, preview: false },
-              { url: form.image5, preview: false },
-            ].filter((image) => image.url);
-            await Promise.all(images.map((image) => dispatch(addSpotImage(createSpot.id, image))));
+        try {
+            // Upload images to Cloudinary
+            const imageUrls = await Promise.all(
+            [form.image1, form.image2, form.image3, form.image4, form.image5]
+                .filter(url => url)
+                .map(url => uploadImage(url))
+            );
+
+            const spotDetails = {
+                name: form.name,
+                description: form.description,
+                address: form.address,
+                city: form.city,
+                state: form.state,
+                country: form.country,
+                price: form.price,
+            };
+
+            const createSpot = await dispatch(addNewSpot(spotDetails, navigate));
+            if (createSpot) {
+                const images = imageUrls.map((url, index) => ({
+                url,
+                preview: index === 0, // First image is the preview image
+                }));
+                await Promise.all(images.map((image) => dispatch(addSpotImage(createSpot.id, image))));
+            }
+        } catch (error) {
+            console.error('Error creating spot:', error);
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setIsSubmitted(true);
+    //     if (Object.keys(errors).length > 0) return;
+
+    //     const spotDetails = {
+    //         name: form.name,
+    //         description: form.description,
+    //         address: form.address,
+    //         city: form.city,
+    //         state: form.state,
+    //         country: form.country,
+    //         price: form.price,
+    //     };
+
+    //     const createSpot = await dispatch(addNewSpot(spotDetails, navigate));
+    //     if (createSpot) {
+    //         const images = [
+    //           { url: form.image1, preview: true },
+    //           { url: form.image2, preview: false },
+    //           { url: form.image3, preview: false },
+    //           { url: form.image4, preview: false },
+    //           { url: form.image5, preview: false },
+    //         ].filter((image) => image.url);
+    //         await Promise.all(images.map((image) => dispatch(addSpotImage(createSpot.id, image))));
+    //     }
+    // }
     return (
         <form className="create-spot-form" onSubmit={handleSubmit}>
             <h2>&nbsp;&nbsp;Create a new Spot</h2>
@@ -215,7 +277,10 @@ function CreateNewSpot() {
             </fieldset>
             <hr />
             {/* Submit Button */}
-            <button type="submit" className="submit-button">Create Spot</button>
+            {/* <button type="submit" className="submit-button">Create Spot</button> */}
+            <button type="submit" className="submit-button" disabled={isLoading}>
+                {isLoading ? 'Creating Spot...' : 'Create Spot'}
+            </button>
         </form>
     )
 }
