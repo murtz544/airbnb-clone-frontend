@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import * as sessionActions from "./store/session";
 import AllSpots from './componenets/AllSpots/AllSpots.jsx';
 import Home from './componenets/Home/Home.jsx';
 import SpotDetails from './componenets/SpotDetails/SpotDetails.jsx';
