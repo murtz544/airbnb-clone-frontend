@@ -43,7 +43,7 @@ function SpotDetails() {
                 <div className="main-image">
                     <img
                     className="spot-main-image"
-                    src={topImage.url}
+                    src={topImage.url === "No preview image available" ? "./logo.png" : topImage.url}
                     alt={`Main image ${topImage.id}`}
                     />
                 </div>

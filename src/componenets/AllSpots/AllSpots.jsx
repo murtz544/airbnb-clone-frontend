@@ -33,8 +33,8 @@ function AllSpots() {
                         </div>}
                             <img 
                                 className="spot-image" 
-                                src={spot.previewImage} 
-                                alt={spot.name} 
+                                src={spot.previewImage === "No preview image available" ? "./logo.png" : spot.previewImage} 
+                                alt="./logo.png"
                             />
                             <div className="spot-star">
                                 <p>
