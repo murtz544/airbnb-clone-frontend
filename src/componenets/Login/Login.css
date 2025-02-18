@@ -24,7 +24,9 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .demo-button:hover {
+    cursor: pointer;
+  }
   .error-list {
     color: red;
     list-style: none;
