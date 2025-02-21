@@ -7,7 +7,7 @@ export const getReviewsAction = (reviews) => {
     }
 };
 export const getAllReviews = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`https://airbnb-api-docs.onrender.com/api/spots/${spotId}/reviews`);
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
         const reviews = await response.json();
         dispatch(getReviewsAction(reviews.Reviews));
@@ -23,7 +23,7 @@ export const addReviewAction = (review) => {
 };
 
 export const addReview = (review, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`https://airbnb-api-docs.onrender.com/api/spots/${spotId}/reviews`, {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST", 
         headers: {
 			'Content-Type': 'application/json',
@@ -42,10 +42,10 @@ export const deleteReviewAction = (reviewId) => {
         type: 'reviews/delete_review',
         reviewId,
     }
-};
+}; 
 
 export const deleteReview = (reviewId) => async (dispatch) => {
-    const response = await csrfFetch(`https://airbnb-api-docs.onrender.com/api/reviews/${reviewId}`, {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "DELETE", 
     })
     if (response.ok) {

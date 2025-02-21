@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    width: 100%;
     /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
   }
   
@@ -16,12 +17,12 @@
     margin: 0;
   }
   
-  /* .nav-logo .navigation-logo {
+  .nav-logo .navigation-logo {
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
     position: absolute; top: 20px; left: 30px;
-  } */
+  }
   .nav-logo {
     display: flex;
     align-items: center;
@@ -38,27 +39,24 @@
 }
 
 .create-spot-button {
+  display: flex;
   color: rgb(53, 53, 199);
   border-radius: 14px;
   padding: 0.6rem 2rem;
   transition: all 0.5s ease;
   background-color: transparent;
   text-shadow: blue;
-  width: 25%;
-  position: absolute; top: 30px; right: 140px;
-  max-width: 190px; /* Limits button width */
-  width: 100%; /* Ensures it adapts */
-  text-align: center;
-  display: inline-block;
+  List-style: none;
+	display: flex;
+	flex-direction: column;
+  position: absolute; top: 30px; right: 160px;
+  max-width: 190px;
 }
-
 
 .create-spot-button:hover {
-    /* box-shadow: 2px 2px 10px grey,
-    -2px -2px 10px rgb(43, 41, 41);
-    background-color: white; */
-    cursor: pointer;
+  cursor: pointer;
 }
+
 .profile-button {
     
     display: flex;
@@ -168,7 +166,7 @@
       right: 3%;
       top: 30px;
       gap: 0.3rem;
-      font-size: 0.9rem; /* Reduce font size */
+      font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
   }
 }
@@ -178,7 +176,7 @@
       right: 3%;
       top: 30px;
       gap: 0.3rem;
-      font-size: 0.9rem; /* Reduce font size */
+      font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
   }
 }
@@ -192,21 +190,21 @@
       padding: 0.3rem 0.6rem;
   }
 }
+
 @media (max-width: 768px) {
   .create-spot-button {
-      width: 50%; /* Reduce width */
-      margin: 10px auto; /* Center horizontally */
+      width: 50%;
+      margin: 10px auto;
       display: block;
   }
 }
 
-/* Mobile View */
 @media (max-width: 480px) {
   .create-spot-button {
-      width: 80%; /* Make it more flexible */
-      position: static; /* Remove positioning issues */
-      text-align: center; /* Center text */
-      margin: 10px auto; /* Center it */
+      width: 80%;
+      position: static;
+      text-align: center;
+      margin: 10px auto;
       display: block;
   }
 }

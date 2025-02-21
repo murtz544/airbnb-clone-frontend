@@ -100,7 +100,7 @@ const Login = () => {
           >
             Login
         </button>
-        <a onClick={handleSubmitDemo}>
+        <a className="demo-button" onClick={handleSubmitDemo}>
             <u>Demo User</u>
         </a>
       </form>
