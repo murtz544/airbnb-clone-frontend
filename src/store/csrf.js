@@ -22,5 +22,5 @@ export async function csrfFetch(url, options = {}) {
 
 // This function fetches the CSRF token on page load
 export function restoreCSRF() {
-  return csrfFetch("/csrf/restore");
+  return csrfFetch("/api/csrf/restore");
 }

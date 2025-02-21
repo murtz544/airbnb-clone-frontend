@@ -14,7 +14,7 @@ const removeUser = () => ({
 
 // Thunk action to log in user
 export const login = (credentials) => async (dispatch) => {
-  const response = await csrfFetch("/session", {
+  const response = await csrfFetch("/api/session", {
     method: "POST",
     body: JSON.stringify(credentials),
   });
@@ -27,7 +27,7 @@ export const login = (credentials) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  const response = await csrfFetch("/session", { method: "DELETE" });
+  const response = await csrfFetch("/api/session", { method: "DELETE" });
   dispatch(removeUser());
   return response;
 };
@@ -35,7 +35,7 @@ export const logout = () => async (dispatch) => {
 // Thunk to sign up user
 export const signup = (userData) => async (dispatch) => {
     const { username, firstName, lastName, email, password } = userData;
-    const response = await csrfFetch("/users", {
+    const response = await csrfFetch("/api/users", {
         method: "POST",
         body: JSON.stringify({
             username,
@@ -56,7 +56,7 @@ export const signup = (userData) => async (dispatch) => {
 
 // Thunk to restore session user
 export const restoreUser = () => async (dispatch) => {
-    const response = await csrfFetch("/session");
+    const response = await csrfFetch("/api/session");
 
     if (response.ok) {
         const data = await response.json();
