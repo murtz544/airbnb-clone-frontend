@@ -22,5 +22,5 @@ export async function csrfFetch(url, options = {}) {
 
 // This function fetches the CSRF token on page load
 export function restoreCSRF() {
-  return csrfFetch("/api/csrf/restore");
+  return csrfFetch("https://airbnb-clone-be-d5zd.onrender.com/api/csrf/restore");
 }
