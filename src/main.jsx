@@ -10,26 +10,38 @@ import { Modal, ModalProvider } from './context/Modal.jsx'
 
 const store = configureStore();
 
-useEffect(() => {
-  // Call this when your app loads
-  restoreCSRF().then(() => {
-    console.log("CSRF token:", Cookies.get("XSRF-TOKEN"));
-  });
-}, []);
-// if (import.meta.env.MODE !== 'production') {
-//  restoreCSRF();
+// Initialize CSRF protection and expose debugging tools in non-production
+if (import.meta.env.MODE !== 'production') {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
-// }
+}
 
-createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+// Create a wrapper component to handle async initialization
+function Root() {
+  useEffect(() => {
+    // Initialize CSRF protection when the app loads
+    restoreCSRF()
+      .then(() => {
+        console.log("CSRF protection initialized");
+      })
+      .catch(error => {
+        console.error("Failed to initialize CSRF protection:", error);
+      });
+  }, []);
+
+  return (
     <ModalProvider>
       <Provider store={store}>
         <App />
         <Modal />
       </Provider>
     </ModalProvider>
+  );
+}
+
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Root />
   </React.StrictMode>
 )
