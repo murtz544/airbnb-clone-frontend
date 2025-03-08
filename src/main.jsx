@@ -10,6 +10,13 @@ import { Modal, ModalProvider } from './context/Modal.jsx'
 
 const store = configureStore();
 
+useEffect(() => {
+  // Call this when your app loads
+  restoreCSRF().then(() => {
+    console.log("CSRF token:", Cookies.get("XSRF-TOKEN"));
+  });
+}, []);
+
 // if (import.meta.env.MODE !== 'production') {
   restoreCSRF();
   window.csrfFetch = csrfFetch;

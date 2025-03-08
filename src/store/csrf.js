@@ -22,5 +22,14 @@ export async function csrfFetch(url, options = {}) {
 
 // This function fetches the CSRF token on page load
 export function restoreCSRF() {
-  return csrfFetch("https://airbnb-clone-be-d5zd.onrender.com/api/csrf/restore");
+  return csrfFetch("https://airbnb-clone-be-d5zd.onrender.com/api/csrf/restore")
+  .then(response => response.json())
+    .then(data => {
+      // If your backend returns the token in the response body
+      if (data.csrfToken) {
+        // Manually set it if the cookie isn't working
+        Cookies.set("XSRF-TOKEN", data.csrfToken);
+      }
+      return data;
+    });
 }
